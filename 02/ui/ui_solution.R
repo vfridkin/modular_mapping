@@ -40,6 +40,14 @@ tabItem_solution <-
           box(
             title = NULL, width = 12, background = NULL,
             leafletOutput(outputId = "geo_testmap"),
+            br(),
+            actionBttn(
+              inputId = "zoom_queensland_button",
+              label = "Queensland", 
+              style = "gradient",
+              color = "primary",
+              icon = icon("search-location")
+            ),
             br()
           )
         )

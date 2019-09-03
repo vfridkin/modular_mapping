@@ -25,3 +25,13 @@ output$geo_testmap <- renderLeaflet({
     addTiles()
 })
 
+observeEvent(input$zoom_queensland_button, {
+  lat <- -20
+  lng <- 146
+  my_zoom <- 5
+  leafletProxy("geo_testmap") %>%
+    flyTo(lng, lat, zoom = my_zoom)
+})
+
+
+

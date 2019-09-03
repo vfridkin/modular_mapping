@@ -16,7 +16,7 @@ invisible(lapply(my_packages, library, character.only = TRUE))
 
 # Global constants
 
-app_directory <- '01'
+app_directory <- '02'
 
 # Make sure to source function and ui files here or they won't be used by the app
 # Source server files within server.R 
