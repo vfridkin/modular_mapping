@@ -5,8 +5,8 @@
 # This allows dynamic control over UI elements
 #
 
-dashboardPage(skin = "blue",
-              dashboardHeader(title = "App title"),
+dashboardPage(skin = "yellow",
+              dashboardHeader(title = "Modular Mapping"),
               dashboardSidebar(uiOutput("ui_sidebar")),
               dashboardBody(
                 includeCSS("www/ui.css"),

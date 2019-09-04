@@ -11,7 +11,7 @@ shinyServer(function(input, output, session, options = options(warn = -1)) {
       column(12, offset = 1, 
              br(),
              h5(str_c("Version ", current_version)),
-             h6("Small heading")
+             h6("Modular mapping")
              )
     )
   })
@@ -19,20 +19,20 @@ shinyServer(function(input, output, session, options = options(warn = -1)) {
   output$ui_sidebar <- renderUI({
     sidebarMenu(id = "tab",
                 
-                menuItem("Solution", 
+                menuItem("Queensland map", 
                          tabName = "solution", 
-                         icon = icon("magic")
+                         icon = icon("globe-asia")
                          ),
                 
-                menuItem("Problem", 
-                         tabName = "problem", 
-                         icon = icon("bug")
-                         ),
-                
-                menuItem("Data", 
-                         tabName = "data", 
-                         icon = icon("cube")
-                         ),
+                # menuItem("Problem", 
+                #          tabName = "problem", 
+                #          icon = icon("bug")
+                #          ),
+                # 
+                # menuItem("Data", 
+                #          tabName = "data", 
+                #          icon = icon("cube")
+                #          ),
                 
                 uiOutput("app_version")
     )

@@ -9,7 +9,7 @@ tabItem_solution <-
   tabItem(tabName = "solution",
     fluidRow(
       column(width = 3,
-             h2(icon("magic"), HTML("&nbsp;"),"Solution")
+             h2(icon("globe-asia"), HTML("&nbsp;"),"Queensland map")
              )
     ),
     tabsetPanel(
@@ -17,21 +17,21 @@ tabItem_solution <-
       id = "solution_tabset",
       
 ####--Weather predictions-------------------------------------------------------------------------------------------
-      tabPanel(
-        'Weather predictions', br(),
-        dygraphOutput("solu_plot"), br(),
-        fluidRow(
-          box(
-            title = "Weather prediction data",
-            width = 12,
-            collapsible = TRUE,
-            collapsed = FALSE,
-            status = "success",
-            solidHeader = TRUE,
-            dataTableOutput("solu_dt")
-          )
-        )
-      ),
+      # tabPanel(
+      #   'Weather predictions', br(),
+      #   dygraphOutput("solu_plot"), br(),
+      #   fluidRow(
+      #     box(
+      #       title = "Weather prediction data",
+      #       width = 12,
+      #       collapsible = TRUE,
+      #       collapsed = FALSE,
+      #       status = "success",
+      #       solidHeader = TRUE,
+      #       dataTableOutput("solu_dt")
+      #     )
+      #   )
+      # ),
 
 ####--Geography-------------------------------------------------------------------------------------------
       tabPanel(
