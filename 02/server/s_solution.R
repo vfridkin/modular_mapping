@@ -21,8 +21,26 @@ output$solu_dt <- DT::renderDataTable({
 ####--Tab 2-------------------------------------------------------------------------------------------
 
 output$geo_testmap <- renderLeaflet({
+  
+  df <- qld_sa2_gpkg()
+  my_ops <- num_from_fac(df$P_AgriForestFish_Tot)/num_from_fac(df$P_Tot_Tot)
+  
   leaflet() %>%
-    addTiles()
+    addTiles() %>%
+    addPolygons(data = df,
+                 weight = 1,
+                 color = "darkmagenta",
+                 fill = TRUE,
+                 fillColor = "darkmagenta",
+                 fillOpacity = my_ops,
+                 group = "Agriculture Employee Ratio"
+    ) %>%
+    addLayersControl(
+      baseGroups = c("Hide overlays", "Agriculture Employee Ratio"),
+      options = layersControlOptions(collapsed = FALSE)
+    ) %>%
+    hideGroup(c("Agriculture Employee Ratio")
+    )
 })
 
 output$pulse_icon_message <- renderText({
