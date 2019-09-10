@@ -52,6 +52,9 @@ shinyServer(function(input, output, session, options = options(warn = -1)) {
   ## Constants
   
   ## ReactiveValues
+  v <- reactiveValues(
+    pulse_icon_message = ""
+  )
   
   # Server modules 
   source('server/s_solution.R', local = TRUE)

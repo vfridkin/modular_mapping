@@ -52,9 +52,12 @@ tabItem_solution <-
                        )
               ),
               column(width = 4,
-                     textInput(
-                       inputId = "pulse_icon_text",
-                       label = "Enter address"
+                     fluidRow(
+                       textInput(
+                         inputId = "pulse_icon_text",
+                         label = "Enter address"
+                       ),
+                       textOutput("pulse_icon_message")
                      )
               ),
               column(width = 2,

@@ -25,6 +25,10 @@ output$geo_testmap <- renderLeaflet({
     addTiles()
 })
 
+output$pulse_icon_message <- renderText({
+  v$pulse_icon_message
+  })
+
 observeEvent(input$zoom_queensland_button, {
   lat <- -20
   lng <- 146
@@ -36,7 +40,8 @@ observeEvent(input$zoom_queensland_button, {
 observeEvent(input$pulse_icon_button, {
   new_address <- isolate(input$pulse_icon_text)
   gcode <- geocode_OSM(new_address)
-  
+  v$pulse_icon_message <- if(is.null(gcode)) paste("Invalid address:", new_address) else ""
+
   validate(
     need(gcode, "Could not geo code address, try again")
   )
@@ -45,8 +50,10 @@ observeEvent(input$pulse_icon_button, {
   lng <- gcode$coords[['x']]
   my_zoom <- 12
   leafletProxy("geo_testmap") %>%
+    removeControl("my_pulse_icon") %>%
     flyTo(lng, lat, zoom = my_zoom) %>%
     addPulseMarkers(
+      layerId = "my_pulse_icon",
       lng = lng, lat = lat,
       label = new_address,
       icon = makePulseIcon(heartbeat = 0.5)
