@@ -8,7 +8,7 @@
 my_packages <- c('tidyverse',
                  'shinycssloaders', 'shinydashboard', 'shinyjs', 'shinyWidgets', 
                  'DT', 'dygraphs', 'gridExtra', 'RColorBrewer', 'summarytools', 
-                 'leaflet', 'leaflet.extras',
+                 'leaflet', 'leaflet.extras', 'tmaptools',
                  'tibbletime', 'data.table', 
                  'broom', 'purrr', 'scales', 'lubridate', 'janitor',    
                  'readxl', 'glue')

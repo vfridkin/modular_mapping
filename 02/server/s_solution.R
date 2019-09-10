@@ -33,5 +33,24 @@ observeEvent(input$zoom_queensland_button, {
     flyTo(lng, lat, zoom = my_zoom)
 })
 
+observeEvent(input$pulse_icon_button, {
+  new_address <- isolate(input$pulse_icon_text)
+  gcode <- geocode_OSM(new_address)
+  
+  validate(
+    need(gcode, "Could not geo code address, try again")
+  )
+  
+  lat <- gcode$coords[['y']]
+  lng <- gcode$coords[['x']]
+  my_zoom <- 12
+  leafletProxy("geo_testmap") %>%
+    flyTo(lng, lat, zoom = my_zoom) %>%
+    addPulseMarkers(
+      lng = lng, lat = lat,
+      label = new_address,
+      icon = makePulseIcon(heartbeat = 0.5)
+    )
+})
 
 

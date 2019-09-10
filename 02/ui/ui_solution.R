@@ -41,12 +41,29 @@ tabItem_solution <-
             title = NULL, width = 12, background = NULL,
             leafletOutput(outputId = "geo_testmap"),
             br(),
-            actionBttn(
-              inputId = "zoom_queensland_button",
-              label = "Queensland", 
-              style = "gradient",
-              color = "primary",
-              icon = icon("search-location")
+            fluidRow(
+              column(width = 6,
+                     actionBttn(
+                       inputId = "zoom_queensland_button",
+                       label = "Queensland", 
+                       style = "gradient",
+                       color = "primary",
+                       icon = icon("search-location")
+                       )
+              ),
+              column(width = 4,
+                     textInput(
+                       inputId = "pulse_icon_text",
+                       label = "Enter address"
+                     )
+              ),
+              column(width = 2,
+                     actionBttn(
+                       inputId = "pulse_icon_button",
+                       label = "Go",
+                       style = "gradient",
+                       color = "primary"
+                     ))
             ),
             br()
           )
