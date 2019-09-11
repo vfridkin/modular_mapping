@@ -28,12 +28,17 @@ output$geo_testmap <- renderLeaflet({
   leaflet() %>%
     addTiles() %>%
     addPolygons(data = df,
-                 weight = 1,
-                 color = "darkmagenta",
-                 fill = TRUE,
-                 fillColor = "darkmagenta",
-                 fillOpacity = my_ops,
-                 group = "Agriculture Employee Ratio"
+                weight = 1,
+                color = "darkmagenta",
+                fill = TRUE,
+                fillColor = "darkmagenta",
+                fillOpacity = my_ops,
+                group = "Agriculture Employee Ratio",
+                highlightOptions = highlightOptions(color = "white", 
+                                                    weight = 2,
+                                                    bringToFront = TRUE
+                                                    ),
+                popup = ~Census_Name_2016
     ) %>%
     addLayersControl(
       baseGroups = c("Hide overlays", "Agriculture Employee Ratio"),
