@@ -68,6 +68,8 @@ tabItem_solution <-
                        color = "primary"
                      ))
             ),
+            br(),
+            dataTableOutput("geo_testmap_dt"),
             br()
           )
         )

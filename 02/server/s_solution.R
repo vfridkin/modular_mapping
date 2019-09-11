@@ -38,7 +38,8 @@ output$geo_testmap <- renderLeaflet({
                                                     weight = 2,
                                                     bringToFront = TRUE
                                                     ),
-                popup = ~Census_Name_2016
+                popup = ~Census_Name_2016,
+                layerId = ~sa2_maincode_2016
     ) %>%
     addLayersControl(
       baseGroups = c("Hide overlays", "Agriculture Employee Ratio"),
@@ -51,6 +52,30 @@ output$geo_testmap <- renderLeaflet({
 output$pulse_icon_message <- renderText({
   v$pulse_icon_message
   })
+
+output$geo_testmap_dt <- DT::renderDataTable({
+  
+  validate(
+    need(v$map_shape_id, "Click on a map polygon")
+  )
+  
+  df <- get_shape_info(v$map_shape_id, qld_sa2_gpkg(), abs_descriptors())
+  
+  DT::datatable(df, 
+                selection = 'single',
+                style = 'bootstrap',
+                options = list(dom = 't',
+                               columnDefs = list(
+                                 list(className = 'dt-right', targets = c(2)),
+                                 list(targets = c(0), visible = FALSE)
+                               ),
+                               headerCallback = JS(
+                                 "function(thead, data, start, end, display){",
+                                 "  $(thead).remove();",
+                                 "}")                               
+                )
+  )
+})
 
 observeEvent(input$zoom_queensland_button, {
   lat <- -20
@@ -83,4 +108,7 @@ observeEvent(input$pulse_icon_button, {
     )
 })
 
-
+observeEvent(input$geo_testmap_shape_click, {
+  p <- input$geo_testmap_shape_click
+  v$map_shape_id <- p$id
+})

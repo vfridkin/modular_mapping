@@ -53,7 +53,8 @@ shinyServer(function(input, output, session, options = options(warn = -1)) {
   
   ## ReactiveValues
   v <- reactiveValues(
-    pulse_icon_message = ""
+    pulse_icon_message = "",
+    map_shape_id = NULL
   )
   
   # Server modules 

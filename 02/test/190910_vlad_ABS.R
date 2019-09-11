@@ -4,6 +4,7 @@ library(rgdal)
 library(RSQLite)
 library(leaflet)
 library(sf)
+library(janitor)
 
 ## Functions
 
@@ -49,6 +50,44 @@ sdf@data <- df3
 
 file_export <- "census2016_eiuwi_qld_sa2_short.rds"
 saveRDS(sdf, file_export)
+
+# Investigate columns
+
+dput(names(df))
+cols_occupations <- names(df) %>% .[grep("^(?=P_)(?=.*_Tot)(?!.*_\\d)(?!.*_NS)",., perl = TRUE)]
+cols_base <- c("sa2_maincode_2016", "Census_Name_2016", "Area sqkm")
+my_cols <- c(cols_base, cols_occupations)
+
+df <- df %>% 
+  select(my_cols) %>%
+  filter(sa2_maincode_2016 == "313041375")
+
+# Import descriptor meta data
+
+abs_meta2 <- read_excel("~/Documents/190902_modular_mapping/Geopackage_2016_EIUWI_for_QLD/Metadata/Metadata_2016_GCP_DataPack.xlsx", 
+                        sheet = "Cell descriptors information") %>%
+  tail(-3)
+
+names(abs_meta2) <- abs_meta2 %>% head(1)
+abs_meta2 <- abs_meta2 %>% tail(-1) 
+abs_meta2 <- abs_meta2 %>% clean_names()
+
+saveRDS(abs_meta2, "abs_descriptors.rds")
+
+# Join with transposed dataframe
+
+abs_meta2 <- readRDS("abs_descriptors.rds")
+
+dft <- t(df) %>% as.data.frame()
+dft$short <- rownames(dft)
+dft <- dft %>% left_join(abs_meta2 %>% select(short, long) %>% unique())
+dft$long[is.na(dft$long)] <- dft$short[is.na(dft$long)]
+dft <- dft %>% 
+  select(name = long, value = V1) 
+dft <- dft %>%
+  mutate(name = str_replace_all(name, "_", " ")) %>%
+  mutate(name = str_replace_all(name, "Persons | Total", ""))
+
 
 #### Playground ####
 file <- "census2016_eiuwi_qld_sa2_short.gpkg"

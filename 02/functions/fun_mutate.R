@@ -10,3 +10,27 @@ predict_weather <- function(){
   df <- cbind(rainfall, temperature)
 }
 
+get_shape_info <- function(id, df, df_descriptors){
+  
+  df <- df@data
+  
+  cols_occupations <- names(df) %>% .[grep("^(?=P_)(?=.*_Tot)(?!.*_\\d)(?!.*_NS)",., perl = TRUE)]
+  cols_base <- c("sa2_maincode_2016", "Census_Name_2016", "Area sqkm")
+  my_cols <- c(cols_base, cols_occupations)
+
+  df <- df %>% 
+    select(my_cols) %>%
+    filter(sa2_maincode_2016 == id)
+  
+  dft <- t(df) %>% as.data.frame()
+  dft$short <- rownames(dft)
+  dft <- dft %>% left_join(df_descriptors %>% select(short, long) %>% unique())
+  dft$long[is.na(dft$long)] <- dft$short[is.na(dft$long)]
+  
+  dft <- dft %>% 
+    select(name = long, value = V1) %>%
+    mutate(name = str_replace_all(name, "_", " ")) %>%
+    mutate(name = str_replace_all(name, "Persons | Total", ""))  
+
+  dft
+}
